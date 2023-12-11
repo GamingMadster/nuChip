@@ -1,5 +1,8 @@
 # nuChip
-nuChip is an interpreter a takes inspiration from the Chip 8 architecture and forms it into it's own.
+nuChip is an virtual machine that takes inspiration from the Chip 8 interpreter.
 
 # Instruction List
-Instruction List can be found [here](https://github.com/GamingMadster/nuChip/blob/main/Instruction%20List/Instructions.MD).
+> [!NOTE]
+> This is not a finished machine, and opcodes may change position within the opcode table.
+
+The opcode list can be found [here](https://github.com/GamingMadster/nuChip/blob/main/Instruction%20List/Instructions.MD).
