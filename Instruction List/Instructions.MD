@@ -60,7 +60,9 @@
 `0x05` / `SETFRQ` - Sets the n1 oscillator's frequency to n2. Oscillator can only be turned off by setting the frequency to 0.
 
   **OTHER OPCODES**
+
 `0x00` / "BRK" - placeholder for empty memory space. 
 
   **UNIMPLEMENTED BUT DEFINED OPCODES**
+
 `0x33` / `JMPKEY` - Jump to n if the key provided (Keypad 0-9) is pressed.
