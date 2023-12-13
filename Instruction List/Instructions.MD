@@ -27,12 +27,6 @@
 
 `0xB0` / `HIRES` - Changes resolution to 256x192. (Default resolution.)
 
-  **VALUE CHECKING OPCODES**
-
-`0x02` / `IFEV` - Checks if the value of register vX is even. If so, set the FL flag to 1. Otherwise, set the FL flag to 0. (vX)
-
-`0x12` / `IFODD` - Checks if the value of register vX is odd. If so, set the FL flag to 1. Otherwise, set the FL flag to 0. (vX)
-
   **REGISTER OPCODES**
 
 `0x01` / `LDREG` - Loads register with a value. (vX, n-16)
@@ -56,6 +50,10 @@
 `0xA1` / `VXANDVY` - Bitwise AND register vX with register vY. Set register vX to the result. (vX, vY)
 
 `0xB1` / `LDI` - Write value n to register I. (n-16)
+
+`0x02` / `IFEV` - Checks if the value of register vX is even. If so, set the FL flag to 1. Otherwise, set the FL flag to 0. (vX)
+
+`0x12` / `IFODD` - Checks if the value of register vX is odd. If so, set the FL flag to 1. Otherwise, set the FL flag to 0. (vX)
 
   **TIMER OPCODES**
 
