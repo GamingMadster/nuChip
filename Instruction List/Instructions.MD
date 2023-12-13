@@ -7,9 +7,9 @@
 
 `0x10` / `CLRFB` - Clears the framebuffer.
 
-`0x20` / `LDFB` - Loads the color information for a pixel at position vX, vY. If the pixel that is overwritten is not black, set the FL flag to 1. (vX, vY, r, g, b)
+`0x20` / `FILL` - Fills the entire screen with the color in the RGB value given. (r, g, b)
 
-`0x30` / `FILL` - Fills the entire screen with the color in the RGB value given. (r, g, b)
+`0x30` / `LDFB` - Loads the color information for a pixel at position vX, vY. If the pixel that is overwritten is not black, set the FL flag to 1. (vX, vY, r, g, b)
 
 `0x40` / `LDFBVX` - Loads the color information for a pixel at position vX, vY. If the pixel that is overwritten is not black, set the FL flag to 1. (vX, vY, vR, vG, vB)
 
@@ -49,20 +49,30 @@
 
   **JUMP OPCODES**
 
-`0x03` / `JMP` - Jumps to address n. (n)
+`0x03` / `JMP` - Jumps to address n. (n-16)
 
 `0x13` / `JMPEQ` - Checks if vX is equal to n2. If true, jump to address n2. (vX, n1, n2-16)
 
 `0x23` / `JMPFL` - Checks if the FL flag is set to n1. If so, jump to n2. (n1, n2)
 
+`0x33` / `JMPKEY` - Jump to n if the key provided (0-F) is pressed. (key, n-16)
+
   **SOUND OPCODES**
 
-`0x05` / `SETFRQ` - Sets the n1 oscillator's frequency to n2. Oscillator can only be turned off by setting the frequency to 0.
+`0x05` / `SETFRQ` - Sets n1 oscillator's frequency to n2. Oscillator can only be turned off by setting the frequency to 0. (n1, n2)
+
+`0x15` / `ADDFRQ` - Adds n2 to n1 oscillator's frequency. (n1, n2)
+
+`0x25` / `SUBFRQ` - Subtracts n2 from n1 oscillator's frequency. (n1, n2)
 
   **OTHER OPCODES**
 
-`0x00` / "BRK" - placeholder for empty memory space. 
+`0x00` / `BRK` - placeholder for empty memory space. 
 
-  **UNIMPLEMENTED BUT DEFINED OPCODES**
+  **PLANNED OPCODES**
 
-`0x33` / `JMPKEY` - Jump to n if the key provided (Keypad 0-9) is pressed.
+`OR` - Bitwise OR register vX with register vY. Set register vX to the result. (vX, vY)
+
+`XOR` - Bitwise XOR register vX with register vY. Set register vX to the result. (vX, vY)
+
+`AND` - Bitwise AND register vX with register vY. Set register vX to the result. (vX, vY)
