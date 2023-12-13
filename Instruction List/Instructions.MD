@@ -49,13 +49,13 @@
 
 `0x71` / `SUBVXVY` - Subtract register vY from register vX. (vX, vY)
 
-`0x81` / "VXORVY" - Bitwise OR register vX with register vY. Set register vX to the result. (vX, vY)
+`0x81` / `VXORVY` - Bitwise OR register vX with register vY. Set register vX to the result. (vX, vY)
 
-`0x91` / "VXXORVY" - Bitwise XOR register vX with register vY. Set register vX to the result. (vX, vY)
+`0x91` / `VXXORVY` - Bitwise XOR register vX with register vY. Set register vX to the result. (vX, vY)
 
-`0xA1` / "VXANDVY" - Bitwise AND register vX with register vY. Set register vX to the result. (vX, vY)
+`0xA1` / `VXANDVY` - Bitwise AND register vX with register vY. Set register vX to the result. (vX, vY)
 
-`0xB1` / "LDI" - Write value n to register I. (n-16)
+`0xB1` / `LDI` - Write value n to register I. (n-16)
 
   **TIMER OPCODES**
 
