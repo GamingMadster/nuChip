@@ -17,13 +17,15 @@
 
 `0x60` / `WRGFX` - Writes the data of a pixel to the graphics memory at n with r, g, and b. (n-16, r, g, b)
 
-`0x70` / `LDGP` - Loads the GFX Pointer with value n. (n-16)
+`0x70` / `LDGFX` - Loads memory values from the address according to the register I. n specifies how many pixels to carry over. (n-16)
 
-`0x80` / `ADDGP` - Adds the value of n to the GFX Pointer. (n-16)
+`0x80` / `LDGP` - Loads the GFX Pointer with value n. (n-16)
 
-`0x90` / `LORES` - Changes resolution to 128x96.
+`0x90` / `ADDGP` - Adds the value of n to the GFX Pointer. (n-16)
 
-`0xA0` / `HIRES` - Changes resolution to 256x192. (Default resolution.)
+`0xA0` / `LORES` - Changes resolution to 128x96.
+
+`0xB0` / `HIRES` - Changes resolution to 256x192. (Default resolution.)
 
   **VALUE CHECKING OPCODES**
 
@@ -40,6 +42,20 @@
 `0x21` / `SUBREG` - Subtracts n from register vX. (vX, n-16)
 
 `0x31` / `VXRAND` - Loads register with a random 8-bit value masked by n. (vX, n)
+
+`0x51` / `LDVXVY` - Write the value of register vY to register vX. (vX, vY)
+
+`0x61` / `ADDVXVY` - Add register vY to register vX. (vX, vY)
+
+`0x71` / `SUBVXVY` - Subtract register vY from register vX. (vX, vY)
+
+`0x81` / "VXORVY" - Bitwise OR register vX with register vY. Set register vX to the result. (vX, vY)
+
+`0x91` / "VXXORVY" - Bitwise XOR register vX with register vY. Set register vX to the result. (vX, vY)
+
+`0xA1` / "VXANDVY" - Bitwise AND register vX with register vY. Set register vX to the result. (vX, vY)
+
+`0xB1` / "LDI" - Write value n to register I. (n-16)
 
   **TIMER OPCODES**
 
@@ -67,12 +83,4 @@
 
   **OTHER OPCODES**
 
-`0x00` / `BRK` - placeholder for empty memory space. 
-
-  **PLANNED OPCODES**
-
-`OR` - Bitwise OR register vX with register vY. Set register vX to the result. (vX, vY)
-
-`XOR` - Bitwise XOR register vX with register vY. Set register vX to the result. (vX, vY)
-
-`AND` - Bitwise AND register vX with register vY. Set register vX to the result. (vX, vY)
+`0x00` / `BRK` - placeholder for empty memory space.
