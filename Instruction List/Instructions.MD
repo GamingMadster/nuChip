@@ -83,9 +83,14 @@
 
 `0x00` / `BRK` - placeholder for empty memory space.
 
+`0x06` / `CALL` - Store the current PC in the stack, increment SP, and go to the subroutine address n. (n-16)
+
+`0x16` / `RTRN` - Subtract the SP and go to the address that is indicated by the SP within the stack.
+
 # The Entire Opcode Table
 
-Empty Spaces are invalid opcodes.
+> [!NOTE]
+> Empty Spaces are where opcodes could be included within nuChip, and may be used later in development.
 
 | |0|1|2|3|4|5|6|7|8|9|A|B|C|D|E|F|
 |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
@@ -95,7 +100,7 @@ Empty Spaces are invalid opcodes.
 |3|`JMP`|`JMPEQ`|`JMPFL`|`JMPKEY`| | | | | | | | | | | | |
 |4|`WAIT`| | | | | | | | | | | | | | | |
 |5|`SETFRQ`|`ADDFRQ`|`SUBFRQ`| | | | | | | | | | | | | |
-|6| | | | | | | | | | | | | | | | |
+|6|`CALL`|`RTRN`| | | | | | | | | | | | | | |
 |7| | | | | | | | | | | | | | | | |
 |8| | | | | | | | | | | | | | | | |
 |9| | | | | | | | | | | | | | | | |
