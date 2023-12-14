@@ -29,27 +29,27 @@
 
   **REGISTER OPCODES**
 
-`0x01` / `LDREG` - Loads register with a value. (vX, n-16)
+`0x01` / `LDI` - Loads register with a value. (vX, n-16)
 
-`0x11` / `ADDREG` - Adds n to register vX. (vX, n-16)
+`0x11` / `ADDI` - Adds n to register vX. (vX, n-16)
 
-`0x21` / `SUBREG` - Subtracts n from register vX. (vX, n-16)
+`0x21` / `SUBI` - Subtracts n from register vX. (vX, n-16)
 
-`0x31` / `VXRAND` - Loads register with a random 8-bit value masked by n. (vX, n)
+`0x31` / `RAND` - Loads register with a random 8-bit value masked by n. (vX, n)
 
-`0x51` / `LDVXVY` - Write the value of register vY to register vX. (vX, vY)
+`0x51` / `MOVE` - Write the value of register vY to register vX. (vX, vY)
 
-`0x61` / `ADDVXVY` - Add register vY to register vX. (vX, vY)
+`0x61` / `ADD` - Add register vY to register vX. (vX, vY)
 
-`0x71` / `SUBVXVY` - Subtract register vY from register vX. (vX, vY)
+`0x71` / `SUB` - Subtract register vY from register vX. (vX, vY)
 
-`0x81` / `VXORVY` - Bitwise OR register vX with register vY. Set register vX to the result. (vX, vY)
+`0x81` / `OR` - Bitwise OR register vX with register vY. Set register vX to the result. (vX, vY)
 
-`0x91` / `VXXORVY` - Bitwise XOR register vX with register vY. Set register vX to the result. (vX, vY)
+`0x91` / `XOR` - Bitwise XOR register vX with register vY. Set register vX to the result. (vX, vY)
 
-`0xA1` / `VXANDVY` - Bitwise AND register vX with register vY. Set register vX to the result. (vX, vY)
+`0xA1` / `AND` - Bitwise AND register vX with register vY. Set register vX to the result. (vX, vY)
 
-`0xB1` / `LDI` - Write value n to register I. (n-16)
+`0xB1` / `LDIR` - Write value n to register I. (n-16)
 
 `0x02` / `IFEV` - Checks if the value of register vX is even. If so, set the FL flag to 1. Otherwise, set the FL flag to 0. (vX)
 
