@@ -1,7 +1,7 @@
 # nuChip
-nuChip is an virtual machine that takes inspiration from the Chip 8 interpreter.
+nuChip is a virtual machine that takes inspiration from the Chip 8 interpreter.
 
-# Instruction List
+# Documentation
 > [!NOTE]
 > This is not a finished machine, and opcodes may change position within the opcode table.
 
