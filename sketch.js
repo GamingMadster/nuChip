@@ -111,6 +111,9 @@ function loadROM(file){
     nuChip.I = 0;
     nuChip.FL = 0;
     
+    // reset the GfxBuffer
+    nuChip.GfxBuffer.resizeCanvas(256,192);
+    
     // reload font
     for(let i = 0; i<Font.length; i++){
       nuChip.gfx[i] = Font[i];
