@@ -27,22 +27,22 @@ var nuChip;
 var ProgramButton;
 
 let keys = [
-  "x",
-  "1",
-  "2",
-  "3",
-  "q",
-  "w",
-  "e",
-  "a",
-  "s",
-  "d",
-  "z",
-  "c",
-  "4",
-  "r",
-  "f",
-  "v",
+  88,
+  49,
+  50,
+  51,
+  81,
+  87,
+  69,
+  65,
+  83,
+  68,
+  90,
+  67,
+  52,
+  82,
+  70,
+  86,
 ];
 
 let Opcodes = [
@@ -52,6 +52,7 @@ let Opcodes = [
   [["JMP",3],["JMPEQ",5],["JMPFL",4],["JMPKEY",4]],
   [["WAIT",1]],
   [["SETFRQ",3],["ADDFRQ",3],["SUBFRQ",3]],
+  [["CALL",3],["RTRN",1]],
 ]
 
 let Font = [
@@ -82,6 +83,7 @@ let Font = [
   0x000000,0xFFFFFF,0x5F5F5F,0x000000,0xFFFFFF,0x5F5F5F,0xFFFFFF,0x5F5F5F,0xFFFFFF,0x5F5F5F,0xFFFFFF,0x5F5F5F,0xFFFFFF,0x5F5F5F,0xFFFFFF,0x5F5F5F,0x000000,0xFFFFFF,0x5F5F5F,0x000000, //O
   0xFFFFFF,0xFFFFFF,0x5F5F5F,0x000000,0xFFFFFF,0x5F5F5F,0xFFFFFF,0x5F5F5F,0xFFFFFF,0xFFFFFF,0x5F5F5F,0x000000,0xFFFFFF,0x5F5F5F,0x000000,0x000000,0xFFFFFF,0x5F5F5F,0x000000,0x000000, //P
   0x000000,0xFFFFFF,0x5F5F5F,0x000000,0xFFFFFF,0x5F5F5F,0xFFFFFF,0x5F5F5F,0xFFFFFF,0x5F5F5F,0xFFFFFF,0x5F5F5F,0x000000,0xFFFFFF,0x5F5F5F,0x000000,0x000000,0x000000,0xFFFFFF,0x5F5F5F, //Q
+  
 ]
 
 let Program = [
@@ -90,6 +92,11 @@ let Program = [
 
 function loadROM(file){
   loadBytes(file.data,function callback(data){
+    if(data.bytes.length>nuChip.memory.length){
+      console.error("The file given is too big to fit into memory.");
+      return;
+    }
+    
     // reset values
     nuChip.memory = new Uint16Array(16384);
     nuChip.framebuffer = new Uint32Array(49152);
@@ -119,7 +126,10 @@ function loadROM(file){
     // reset oscillators
     for(let i = 0; i<nuChip.SO.length; i++){
       nuChip.SO[i].freq(0);
+      nuChip.SO[i].amp(0);
     }
+    
+    loop();
   })
 }
 
@@ -164,7 +174,7 @@ function setup() {
 // general loop
 function draw() {
   // main loop
-  for(let i = 0; i<2000; i++){
+  for(let i = 0; i<10000; i++){
     let opcode = Fetch();
     let decoded = decode(opcode);
     execute(decoded);
@@ -212,6 +222,17 @@ function execute(instArray){
   switch (instArray[0][0]) {
     case "BRK":
       break;
+      
+    case "CALL":
+      nuChip.stack[nuChip.SP] = nuChip.PC
+      nuChip.SP+=1;
+      nuChip.PC = values[0]*0x100+values[1];
+      break;
+      
+    case "RTRN":
+      nuChip.SP-=1;
+      nuChip.PC = nuChip.stack[nuChip.SP];
+      break;
 
     case "CLEAR":
       for(let i = 0; i<nuChip.framebuffer.length; i++){
@@ -221,7 +242,7 @@ function execute(instArray){
       
     case "FILL":
       for(let i = 0; i<nuChip.framebuffer.length; i++){
-        nuChip.framebuffer[i] = values[0]*0x10000+values[1]*0x100+values[2];
+        nuChip.framebuffer[i] = (values[0]<<16)+(values[1]<<8)+values[2];
       }
       break;
       
@@ -249,11 +270,11 @@ function execute(instArray){
 
       for(let i = 0; i<sizeY; i++){
         for(let o = 0; o<sizeX; o++){
-          if(nuChip.framebuffer[(o+i*nuChip.GfxBuffer.width)+(posX+posY*nuChip.GfxBuffer.width)]>0)nuChip.FL = 1;
+          if(nuChip.framebuffer[((o+posX)%nuChip.GfxBuffer.width+(i*nuChip.GfxBuffer.width+posY*nuChip.GfxBuffer.width)%nuChip.framebuffer.length)]>0)nuChip.FL = 1;
           if(values[4]==0x1){
-            if(nuChip.gfx[(o+i*sizeX)+nuChip.GFXP]!=0)nuChip.framebuffer[(o+i*nuChip.GfxBuffer.width)+(posX+posY*nuChip.GfxBuffer.width)] = nuChip.gfx[(o+i*sizeX)+nuChip.GFXP];
+            if(nuChip.gfx[(o+i*sizeX)+nuChip.GFXP]!=0)nuChip.framebuffer[((o+posX)%nuChip.GfxBuffer.width+(i*nuChip.GfxBuffer.width+posY*nuChip.GfxBuffer.width)%nuChip.framebuffer.length)] = nuChip.gfx[(o+i*sizeX)+nuChip.GFXP];
           }else{
-            nuChip.framebuffer[(o+i*nuChip.GfxBuffer.width)+(posX+posY*nuChip.GfxBuffer.width)] = nuChip.gfx[(o+i*sizeX)+nuChip.GFXP];
+            nuChip.framebuffer[((o+posX)%nuChip.GfxBuffer.width+(i*nuChip.GfxBuffer.width+posY*nuChip.GfxBuffer.width)%nuChip.framebuffer.length)] = nuChip.gfx[(o+i*sizeX)+nuChip.GFXP];
           }
         }
       }
@@ -348,7 +369,7 @@ function execute(instArray){
       break;
       
     case "JMPKEY":
-      if(keyIsPressed&&keys.indexOf(key)==values[0])nuChip.PC=values[1]*0x100+values[2];
+      if(keyIsDown(keys[values[0]]))nuChip.PC=values[1]*0x100+values[2];
       break;
       
     case "IFEV":
@@ -364,15 +385,18 @@ function execute(instArray){
       break;
       
     case "SETFRQ":
-      nuChip.SO[values[0]].freq(values[1]*7);
+      if(values[1]==0){nuChip.SO[values[0]].amp(0,0);}else{nuChip.SO[values[0]].amp(0.1,0);}
+      nuChip.SO[values[0]].freq(values[1]*10,0);
       break;
       
     case "ADDFRQ":
-      nuChip.SO[values[0]].freq(nuChip.SO[values[0]].getFreq()+values[1]*10);
+      nuChip.SO[values[0]].amp(0.1,0);
+      nuChip.SO[values[0]].freq(nuChip.SO[values[0]].getFreq()+values[1]*10,0);
       break;
       
     case "SUBFRQ":
-      nuChip.SO[values[0]].freq(nuChip.SO[values[0]].getFreq()-values[1]*10);
+      nuChip.SO[values[0]].freq(nuChip.SO[values[0]].getFreq()-values[1]*10,0);
+      if(nuChip.SO[values[0]].getFreq()<1){nuChip.SO[values[0]].amp(0,0);}else{nuChip.SO[values[0]].amp(0.1,0);}
       break;
       
     default:
@@ -383,13 +407,13 @@ function execute(instArray){
 // screen refresh
 function screenRefresh() {
   nuChip.GfxBuffer.background(0);
-
+  
   nuChip.GfxBuffer.loadPixels();
   
   for(let i = 0; i<nuChip.framebuffer.length; i++){
     if(nuChip.framebuffer[i]>0){
-      let r = (nuChip.framebuffer[i]&0xFF0000)/0x10000;
-      let g = (nuChip.framebuffer[i]&0x00FF00)/0x100;
+      let r = (nuChip.framebuffer[i]&0xFF0000)>>16;
+      let g = (nuChip.framebuffer[i]&0x00FF00)>>8;
       let b = nuChip.framebuffer[i]&0x0000FF;
       let clr = color(r,g,b);
       nuChip.GfxBuffer.pixels[(i*4)] = red(clr);
