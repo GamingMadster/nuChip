@@ -1,3 +1,6 @@
+// Optimizations
+p5.disableFriendlyErrors = true;
+
 // the virtual nuChip class
 class ChipClass {
   constructor(){
@@ -43,11 +46,11 @@ let keys = [
 ];
 
 let Opcodes = [
-  [["BRK",1],["CLRFB",1],["FILL",4],["LDFB",6],["LDFBVX",6],["RDGFX",6],["WRGFX",5],["LDGFX",3],["LDGP",3],["ADDGP",3],["LORES",1],["HIRES",1]],
-  [["LDREG",4],["ADDREG",4],["SUBREG",4],["VXRAND",3],["LDDT",2],["LDVXVY",3],["ADDVXVY",3],["SUBVXVY",3],["VXORVY",3],["VXXORVY",3],["VXANDVY",3],["LDI",3]],
+  [["BRK",1],["CLEAR",1],["FILL",4],["LDFB",6],["LDFBVX",6],["RDGFX",6],["WRGFX",5],["LDGFX",3],["LDGP",3],["ADDGP",3],["LORES",1],["HIRES",1]],
+  [["LDI",4],["ADDI",4],["SUBI",4],["RAND",3],["LDDT",2],["MOVE",3],["ADD",3],["SUB",3],["OR",3],["XOR",3],["AND",3],["LDIR",3]],
   [["IFEV",2],["IFODD",2]],
   [["JMP",3],["JMPEQ",5],["JMPFL",4],["JMPKEY",4]],
-  [["WAITDT",1]],
+  [["WAIT",1]],
   [["SETFRQ",3],["ADDFRQ",3],["SUBFRQ",3]],
 ]
 
@@ -210,7 +213,7 @@ function execute(instArray){
     case "BRK":
       break;
 
-    case "CLRFB":
+    case "CLEAR":
       for(let i = 0; i<nuChip.framebuffer.length; i++){
         nuChip.framebuffer[i] = 0;
       }
@@ -284,19 +287,19 @@ function execute(instArray){
       nuChip.framebuffer = new Uint32Array(49152);
       break;
       
-    case "LDREG":
+    case "LDI":
       nuChip.registers[values[0]]=values[1]*0x100+values[2];
       break;
 
-    case "ADDREG":
+    case "ADDI":
       nuChip.registers[values[0]]+=values[1]*0x100+values[2];
       break;
       
-    case "SUBREG":
+    case "SUBI":
       nuChip.registers[values[0]]-=values[1]*0x100+values[2];
       break;
 
-    case "VXRAND":
+    case "RAND":
       nuChip.registers[values[0]] = floor(random(255)) & values[1];
       break;
       
@@ -304,31 +307,31 @@ function execute(instArray){
       nuChip.DT = values[0];
       break;
 
-    case "LDVXVY":
+    case "MOVE":
       nuChip.registers[values[0]] = nuChip.registers[values[1]];
       break;
 
-    case "ADDVXVY":
+    case "ADD":
       nuChip.registers[values[0]] += nuChip.registers[values[1]];
       break;
       
-    case "SUBVXVY":
+    case "SUB":
       nuChip.registers[values[0]] -= nuChip.registers[values[1]];
       break;
       
-    case "VXORVY":
+    case "OR":
       nuChip.registers[values[0]] = nuChip.registers[values[0]] | nuChip.registers[values[1]];
       break;
       
-    case "VXXORVY":
+    case "XOR":
       nuChip.registers[values[0]] = nuChip.registers[values[0]] ^ nuChip.registers[values[1]];
       break;
       
-    case "VXANDVY":
+    case "AND":
       nuChip.registers[values[0]] = nuChip.registers[values[0]] & nuChip.registers[values[1]];
       break;
       
-    case "LDI":
+    case "LDIR":
       nuChip.I = values[0]*0x100+values[1];
       break;
 
@@ -356,7 +359,7 @@ function execute(instArray){
       }
       break;
       
-    case "WAITDT":
+    case "WAIT":
       if(nuChip.DT>0)nuChip.PC-=1;
       break;
       
