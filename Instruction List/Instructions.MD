@@ -90,7 +90,7 @@ Empty Spaces are invalid opcodes.
 | |0|1|2|3|4|5|6|7|8|9|A|B|C|D|E|F|
 |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
 |0|`BRK`|`CLEAR`|`FILL`|`LDFB`|`LDFBVX`|`RDGFX`|`WRGFX`|`LDGFX`|`LDGP`|`ADDGP`|`LORES`|`HIRES`| | | | |
-|1|`LDI`|`ADDI`|`SUBI`|`RAND`|`LDDT`|`MOVE`|`ADD|`SUB`|`OR`|`XOR`|`AND`|`LDIR`| | | | |
+|1|`LDI`|`ADDI`|`SUBI`|`RAND`|`LDDT`|`MOVE`|`ADD`|`SUB`|`OR`|`XOR`|`AND`|`LDIR`| | | | |
 |2|`IFEV`|`IFODD`| | | | | | | | | | | | | | |
 |3|`JMP`|`JMPEQ`|`JMPFL`|`JMPKEY`| | | | | | | | | | | | |
 |4|`WAIT`| | | | | | | | | | | | | | | |
