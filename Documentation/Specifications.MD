@@ -1,6 +1,6 @@
 # Specifications
 
-`Memory` - 16384 Bytes, 16-bit
+`Memory` - 16384 Bytes, 16-bit (Albiet this might increase to 32768 Bytes in the future.)
 
 `Framebuffer` - 49152 Bytes HIRES, 12288 Bytes LORES (amount of bits is dependent on implementation.)
 
@@ -8,9 +8,9 @@
 
 `Graphics Memory` - 8192 Bytes (amount of bits is dependent on implementation.)
 
-`Stack` - 32 Positions, 16-bit
+`Stack` - 64 Positions, 16-bit
 
-`Registers` - 32 Registers, 16-bit
+`Registers` - 64 Registers, 16-bit
 
 `Sound` - 6 Channels (2 Square, 2 Sawtooth, 2 Triangle)
 
