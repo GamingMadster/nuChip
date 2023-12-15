@@ -47,7 +47,7 @@ let keys = [
 
 let Opcodes = [
   [["BRK",1],["CLEAR",1],["FILL",4],["LDFB",6],["LDFBVX",6],["RDGFX",6],["WRGFX",5],["LDGFX",3],["LDGPI",3],["ADDGPI",3],["LORES",1],["HIRES",1],["LDGP",5]],
-  [["LDI",4],["ADDI",4],["SUBI",4],["RAND",3],["LDDT",2],["MOVE",3],["ADD",3],["SUB",3],["OR",3],["XOR",3],["AND",3],["LDIR",3],["BCD",3]],
+  [["LDI",4],["ADDI",4],["SUBI",4],["RAND",3],["LDDT",2],["MOVE",3],["ADD",3],["SUB",3],["OR",3],["XOR",3],["AND",3],["LDIR",3],["BCD",3],["RAND16",4]],
   [["IFEV",2],["IFODD",2]],
   [["JMP",3],["JMPEQ",5],["JMPFL",4],["JMPKEY",4]],
   [["WAIT",1]],
@@ -87,7 +87,7 @@ let Font = [
 ]
 
 let Program = [
-  0x03, 0x00, 0x00,
+  0x03,0x00,0x00
 ]
 
 function loadROM(file){
@@ -332,6 +332,10 @@ function execute(instArray){
     case "RAND":
       nuChip.registers[values[0]] = floor(random(255)) & values[1];
       break;
+    
+    case "RAND16":
+      nuChip.registers[values[0]] = floor(random(65535)) & (values[1]*0x100+values[2]);
+      break;
       
     case "LDDT":
       nuChip.DT = values[0];
@@ -367,13 +371,14 @@ function execute(instArray){
       
     case "BCD":
       let stringed = String(nuChip.registers[values[0]]);
-      while (stringed.length<4){
+      while (stringed.length<5){
         stringed = "0"+stringed;
       }
       nuChip.registers[values[1]] = int(stringed[0]);
       nuChip.registers[values[1]+1] = int(stringed[1]);
       nuChip.registers[values[1]+2] = int(stringed[2]);
       nuChip.registers[values[1]+3] = int(stringed[3]);
+      nuChip.registers[values[1]+4] = int(stringed[4]);
       break;
 
     case "JMP":
