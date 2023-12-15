@@ -91,7 +91,7 @@
 
 > [!NOTE]
 > Empty Spaces are where opcodes could be included within nuChip, and may be used later in development.
-> The number next to the instruction is how much the Program Counter should increase.
+> The number next to the instruction indicates the amount the Program Counter should increase.
 
 | |0|1|2|3|4|5|6|7|8|9|A|B|C|D|E|F|
 |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
