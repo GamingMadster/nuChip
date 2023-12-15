@@ -7,8 +7,8 @@ class ChipClass {
     this.memory = new Uint16Array(16384);
     this.framebuffer = new Uint32Array(49152);
     this.gfx = new Uint32Array(8192);
-    this.stack = new Uint16Array(32);
-    this.registers = new Uint16Array(32);
+    this.stack = new Uint16Array(64);
+    this.registers = new Uint16Array(64);
     
     this.PC = 0;
     this.SP = 0;
@@ -46,8 +46,8 @@ let keys = [
 ];
 
 let Opcodes = [
-  [["BRK",1],["CLEAR",1],["FILL",4],["LDFB",6],["LDFBVX",6],["RDGFX",6],["WRGFX",5],["LDGFX",3],["LDGP",3],["ADDGP",3],["LORES",1],["HIRES",1]],
-  [["LDI",4],["ADDI",4],["SUBI",4],["RAND",3],["LDDT",2],["MOVE",3],["ADD",3],["SUB",3],["OR",3],["XOR",3],["AND",3],["LDIR",3]],
+  [["BRK",1],["CLEAR",1],["FILL",4],["LDFB",6],["LDFBVX",6],["RDGFX",6],["WRGFX",5],["LDGFX",3],["LDGPI",3],["ADDGPI",3],["LORES",1],["HIRES",1],["LDGP",5]],
+  [["LDI",4],["ADDI",4],["SUBI",4],["RAND",3],["LDDT",2],["MOVE",3],["ADD",3],["SUB",3],["OR",3],["XOR",3],["AND",3],["LDIR",3],["BCD",3]],
   [["IFEV",2],["IFODD",2]],
   [["JMP",3],["JMPEQ",5],["JMPFL",4],["JMPKEY",4]],
   [["WAIT",1]],
@@ -205,8 +205,10 @@ function decode(opcode){
   let row = Opcodes[opcode&0xF];
 
   if(row==undefined){
-    console.error("INVALID INSTRUCTION.", nuChip.PC, opcode, row);
-    noLoop();
+    console.error("INVALID INSTRUCTION. STOPPING CODE...", "OCCURED AT MEM ADDRESS: " + hex(nuChip.PC,4), "ADDITIONAL INFO " + hex(opcode,2));
+    //let instruction = ["BRK",1];
+    //let values = [];
+    //return [instruction,values];
   }
   
   let instruction = row[(opcode&0xF0)/0x10];
@@ -293,12 +295,16 @@ function execute(instArray){
       }
       break;
 
-    case "LDGP":
+    case "LDGPI":
       nuChip.GFXP = values[0]*0x100+values[1];
       break;
 
-    case "ADDGP":
+    case "ADDGPI":
       nuChip.GFXP += values[0]*0x100+values[1];
+      break;
+      
+    case "LDGP":
+      nuChip.GFXP = nuChip.registers[values[0]]*values[1]+values[2]*0x100+values[3];
       break;
       
     case "LORES":
@@ -357,6 +363,17 @@ function execute(instArray){
       
     case "LDIR":
       nuChip.I = values[0]*0x100+values[1];
+      break;
+      
+    case "BCD":
+      let stringed = String(nuChip.registers[values[0]]);
+      while (stringed.length<4){
+        stringed = "0"+stringed;
+      }
+      nuChip.registers[values[1]] = int(stringed[0]);
+      nuChip.registers[values[1]+1] = int(stringed[1]);
+      nuChip.registers[values[1]+2] = int(stringed[2]);
+      nuChip.registers[values[1]+3] = int(stringed[3]);
       break;
 
     case "JMP":
