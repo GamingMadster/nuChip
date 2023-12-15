@@ -19,9 +19,11 @@
 
 `0x70` / `LDGFX` - Loads memory values from the address according to the register I. n specifies how many pixels to carry over. (n-16)
 
-`0x80` / `LDGP` - Loads the GFX Pointer with value n. (n-16)
+`0x80` / `LDGPI` - Loads the GFX Pointer with value n. (n-16)
 
-`0x90` / `ADDGP` - Adds the value of n to the GFX Pointer. (n-16)
+`0x90` / `ADDGPI` - Adds the value of n to the GFX Pointer. (n-16)
+
+`0xC0` / `LDGP` - Loads the GFX pointer with the value of register vX. (vX)
 
 `0xA0` / `LORES` - Changes resolution to 128x96.
 
@@ -55,6 +57,10 @@
 
 `0x12` / `IFODD` - Checks if the value of register vX is odd. If so, set the FL flag to 1. Otherwise, set the FL flag to 0. (vX)
 
+`0xC1` / `BCD` - Loads registers vY - vY + 4 with the Bit Common Decimal of register vX.
+
+`0xD1` / `RAND16` - Loads register with a random 16-bit value masked by n. (vX, n-16)
+
   **TIMER OPCODES**
 
 `0x41` / `LDDT` - Sets the Delay Timer to n. (n)
@@ -67,7 +73,7 @@
 
 `0x13` / `JMPEQ` - Checks if vX is equal to n2. If true, jump to address n2. (vX, n1, n2-16)
 
-`0x23` / `JMPFL` - Checks if the FL flag is set to n1. If so, jump to n2. (n1, n2)
+`0x23` / `JMPFL` - Checks if the FL flag is set to n1. If so, jump to n2. (n1, n2-16)
 
 `0x33` / `JMPKEY` - Jump to n if the key provided (0-F) is pressed. (key, n-16)
 
@@ -91,12 +97,12 @@
 
 > [!NOTE]
 > Empty Spaces are where opcodes could be included within nuChip, and may be used later in development.
-> The number next to the instruction indicates the amount the Program Counter should increase.
+> The number next to the instruction indicates the amount the Program Counter should increase by.
 
 | |0|1|2|3|4|5|6|7|8|9|A|B|C|D|E|F|
 |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
-|0|`BRK`,`1`|`CLEAR`,`1`|`FILL`,`4`|`LDFB`,`6`|`LDFBVX`,`6`|`RDGFX`,`5`|`WRGFX`,`5`|`LDGFX`,`3`|`LDGP`,`3`|`ADDGP`,`3`|`LORES`,`1`|`HIRES`,`1`| | | | |
-|1|`LDI`,`4`|`ADDI`,`4`|`SUBI`,`4`|`RAND`,`3`|`LDDT`,`2`|`MOVE`,`3`|`ADD`,`3`|`SUB`,`3`|`OR`,`3`|`XOR`,`3`|`AND`,`3`|`LDIR`,`3`| | | | |
+|0|`BRK`,`1`|`CLEAR`,`1`|`FILL`,`4`|`LDFB`,`6`|`LDFBVX`,`6`|`RDGFX`,`5`|`WRGFX`,`5`|`LDGFX`,`3`|`LDGPI`,`3`|`ADDGPI`,`3`|`LORES`,`1`|`HIRES`,`1`|`LDGP`,`5`| | | |
+|1|`LDI`,`4`|`ADDI`,`4`|`SUBI`,`4`|`RAND`,`3`|`LDDT`,`2`|`MOVE`,`3`|`ADD`,`3`|`SUB`,`3`|`OR`,`3`|`XOR`,`3`|`AND`,`3`|`LDIR`,`3`|`BCD`,`3`|`RAND16`,`4`| | |
 |2|`IFEV`,`2`|`IFODD`,`2`| | | | | | | | | | | | | | |
 |3|`JMP`,`3`|`JMPEQ`,`5`|`JMPFL`,`4`|`JMPKEY`,`4`| | | | | | | | | | | | |
 |4|`WAIT`,`1`| | | | | | | | | | | | | | | |
