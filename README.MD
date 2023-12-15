@@ -5,4 +5,4 @@ nuChip is a virtual machine that takes inspiration from the Chip 8 interpreter.
 > [!NOTE]
 > This is not a finished machine, and opcodes may change position within the opcode table.
 
-The opcode list and table can be found [here](Opcodes.MD).
+The opcode list and table can be found [here](Documentation/Opcodes.MD).
