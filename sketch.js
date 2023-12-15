@@ -4,7 +4,7 @@ p5.disableFriendlyErrors = true;
 // the virtual nuChip class
 class ChipClass {
   constructor(){
-    this.memory = new Uint16Array(16384);
+    this.memory = new Uint16Array(32768);
     this.framebuffer = new Uint32Array(49152);
     this.gfx = new Uint32Array(8192);
     this.stack = new Uint16Array(64);
@@ -100,7 +100,7 @@ function loadROM(file){
     }
     
     // reset values
-    nuChip.memory = new Uint16Array(16384);
+    nuChip.memory = new Uint16Array(32768);
     nuChip.framebuffer = new Uint32Array(49152);
     nuChip.gfx = new Uint32Array(8192);
     nuChip.stack = new Uint16Array(32);
