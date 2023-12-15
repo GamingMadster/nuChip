@@ -14,7 +14,7 @@
 
 `Sound` - 6 Channels (2 Square, 2 Sawtooth, 2 Triangle)
 
-nuChip runs at 10,000 instructions per frame.
+nuChip runs at 25,000 instructions per frame, although it is allowed to be up to 50,000 if the `TURBO` opcode is called.
 
 
 **Independent Registers and Pointers**
