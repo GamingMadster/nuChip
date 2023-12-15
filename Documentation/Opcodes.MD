@@ -87,20 +87,21 @@
 
 `0x16` / `RTRN` - Subtract the SP and go to the address that is indicated by the SP within the stack.
 
-# The Entire Opcode Table
+# Opcode Table
 
 > [!NOTE]
 > Empty Spaces are where opcodes could be included within nuChip, and may be used later in development.
+> The number next to the instruction is how much the Program Counter should increase.
 
 | |0|1|2|3|4|5|6|7|8|9|A|B|C|D|E|F|
 |-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|-|
-|0|`BRK`|`CLEAR`|`FILL`|`LDFB`|`LDFBVX`|`RDGFX`|`WRGFX`|`LDGFX`|`LDGP`|`ADDGP`|`LORES`|`HIRES`| | | | |
-|1|`LDI`|`ADDI`|`SUBI`|`RAND`|`LDDT`|`MOVE`|`ADD`|`SUB`|`OR`|`XOR`|`AND`|`LDIR`| | | | |
-|2|`IFEV`|`IFODD`| | | | | | | | | | | | | | |
-|3|`JMP`|`JMPEQ`|`JMPFL`|`JMPKEY`| | | | | | | | | | | | |
-|4|`WAIT`| | | | | | | | | | | | | | | |
-|5|`SETFRQ`|`ADDFRQ`|`SUBFRQ`| | | | | | | | | | | | | |
-|6|`CALL`|`RTRN`| | | | | | | | | | | | | | |
+|0|`BRK`,`1`|`CLEAR`,`1`|`FILL`,`4`|`LDFB`,`6`|`LDFBVX`,`6`|`RDGFX`,`5`|`WRGFX`,`5`|`LDGFX`,`3`|`LDGP`,`3`|`ADDGP`,`3`|`LORES`,`1`|`HIRES`,`1`| | | | |
+|1|`LDI`,`4`|`ADDI`,`4`|`SUBI`,`4`|`RAND`,`3`|`LDDT`,`2`|`MOVE`,`3`|`ADD`,`3`|`SUB`,`3`|`OR`,`3`|`XOR`,`3`|`AND`,`3`|`LDIR`,`3`| | | | |
+|2|`IFEV`,`2`|`IFODD`,`2`| | | | | | | | | | | | | | |
+|3|`JMP`,`3`|`JMPEQ`,`5`|`JMPFL`,`4`|`JMPKEY`,`4`| | | | | | | | | | | | |
+|4|`WAIT`,`1`| | | | | | | | | | | | | | | |
+|5|`SETFRQ`,`3`|`ADDFRQ`,`3`|`SUBFRQ`,`3`| | | | | | | | | | | | | |
+|6|`CALL`,`3`|`RTRN`,`1`| | | | | | | | | | | | | | |
 |7| | | | | | | | | | | | | | | | |
 |8| | | | | | | | | | | | | | | | |
 |9| | | | | | | | | | | | | | | | |
