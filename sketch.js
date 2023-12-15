@@ -17,6 +17,7 @@ class ChipClass {
     this.GFXP = 0;
     this.I = 0;
     this.FL = 0;
+    this.IPF = 25000;
     
     this.GfxBuffer = createGraphics(256,192);
   }
@@ -53,6 +54,7 @@ let Opcodes = [
   [["WAIT",1]],
   [["SETFRQ",3],["ADDFRQ",3],["SUBFRQ",3]],
   [["CALL",3],["RTRN",1]],
+  [["TURBO"],1],
 ]
 
 let Font = [
@@ -110,6 +112,7 @@ function loadROM(file){
     nuChip.GFXP = 0;
     nuChip.I = 0;
     nuChip.FL = 0;
+    nuChip.IPF = 25000;
     
     // reset the GfxBuffer
     nuChip.GfxBuffer.resizeCanvas(256,192);
@@ -177,7 +180,7 @@ function setup() {
 // general loop
 function draw() {
   // main loop
-  for(let i = 0; i<10000; i++){
+  for(let i = 0; i<nuChip.IPF; i++){
     let opcode = Fetch();
     let decoded = decode(opcode);
     execute(decoded);
@@ -193,7 +196,10 @@ function draw() {
   fill("white");
   stroke("black");
   strokeWeight(2);
-  if(keyIsDown(73))text(frameRate(),0,10);
+  if(keyIsDown(73)){
+    text(frameRate(),0,10);
+    text("IPF: "+nuChip.IPF,0,20);
+  }
 }
 
 // fetch, decode, execute loop
@@ -422,6 +428,14 @@ function execute(instArray){
     case "SUBFRQ":
       nuChip.SO[values[0]].freq(nuChip.SO[values[0]].getFreq()-values[1]*10,0);
       if(nuChip.SO[values[0]].getFreq()<1){nuChip.SO[values[0]].amp(0,0);}else{nuChip.SO[values[0]].amp(0.1,0);}
+      break;
+      
+    case "TURBO":
+      if(nuChip.IPF==25000){
+        nuChip.IPF = 50000;
+      }else{
+        nuChip.IPF = 25000;
+      }
       break;
       
     default:
