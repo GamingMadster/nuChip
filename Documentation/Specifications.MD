@@ -1,6 +1,6 @@
 # Specifications
 
-`Memory` - 16384 Bytes, 16-bit (Albiet this might increase to 32768 Bytes in the future.)
+`Memory` - 16384 Bytes, 16-bit (Albeit this might increase to 32768 Bytes in the future.)
 
 `Framebuffer` - 49152 Bytes HIRES, 12288 Bytes LORES (amount of bits is dependent on implementation.)
 
