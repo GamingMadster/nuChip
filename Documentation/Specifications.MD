@@ -1,8 +1,8 @@
 # Specifications
 
-`Memory` - 16384 Bytes, 16-bit (Albeit this might increase to 32768 Bytes in the future.)
+`Memory` - 16,384 Bytes, 16-bit (Albeit this might increase to 32,768 Bytes in the future.)
 
-`Framebuffer` - 49152 Bytes HIRES, 12288 Bytes LORES (amount of bits is dependent on implementation.)
+`Framebuffer` - 49,152 Bytes HIRES, 12288 Bytes LORES (amount of bits is dependent on implementation.)
 
 `Display` - 256x192 HIRES, 128x96 LORES
 
@@ -13,6 +13,8 @@
 `Registers` - 64 Registers, 16-bit
 
 `Sound` - 6 Channels (2 Square, 2 Sawtooth, 2 Triangle)
+
+nuChip runs at 10,000 instructions per frame.
 
 
 **Independent Registers and Pointers**
