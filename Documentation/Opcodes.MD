@@ -93,6 +93,8 @@
 
 `0x16` / `RTRN` - Subtract the SP and go to the address that is indicated by the SP within the stack.
 
+`0x07` / `TURBO` - Switch the machine between 25000 and 50000 instructions per frame.
+
 # Opcode Table
 
 > [!NOTE]
@@ -108,7 +110,7 @@
 |4|`WAIT`,`1`| | | | | | | | | | | | | | | |
 |5|`SETFRQ`,`3`|`ADDFRQ`,`3`|`SUBFRQ`,`3`| | | | | | | | | | | | | |
 |6|`CALL`,`3`|`RTRN`,`1`| | | | | | | | | | | | | | |
-|7| | | | | | | | | | | | | | | | |
+|7|`TURBO`,`1`| | | | | | | | | | | | | | | |
 |8| | | | | | | | | | | | | | | | |
 |9| | | | | | | | | | | | | | | | |
 |A| | | | | | | | | | | | | | | | |
