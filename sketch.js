@@ -89,7 +89,7 @@ let Font = [
 ]
 
 let Program = [
-  0x03,0x00,0x00
+  0x03, 0x00, 0x00,
 ]
 
 function loadROM(file){
@@ -151,7 +151,7 @@ function setup() {
   
   // create an instance of "ChipClass"
   nuChip = new ChipClass();
-  
+
   nuChip.GfxBuffer.noStroke();
   noSmooth();
   
@@ -297,7 +297,7 @@ function execute(instArray){
       
     case "LDGFX":
       for(let i = 0; i<(values[0]*0x100+values[1])*3; i+=3){
-        nuChip.gfx[i/3+Font.length] = nuChip.memory[i+nuChip.I]*0x10000+nuChip.memory[i+nuChip.I+1]*0x100+nuChip.memory[i+nuChip.I+2];
+        nuChip.gfx[i/3+nuChip.GFXP] = nuChip.memory[i+nuChip.I]*0x10000+nuChip.memory[i+nuChip.I+1]*0x100+nuChip.memory[i+nuChip.I+2];
       }
       break;
 
@@ -392,7 +392,11 @@ function execute(instArray){
       break;
 
     case "JMPEQ":
-      if(nuChip.registers[values[0]]==values[1])nuChip.PC = values[2]*0x100+values[3];
+      if(nuChip.registers[values[0]]==values[1]){
+        nuChip.stack[nuChip.SP] = nuChip.PC
+        nuChip.SP+=1;
+        nuChip.PC = values[2]*0x100+values[3];
+      }
       break;
       
     case "JMPFL":
@@ -400,7 +404,11 @@ function execute(instArray){
       break;
       
     case "JMPKEY":
-      if(keyIsDown(keys[values[0]]))nuChip.PC=values[1]*0x100+values[2];
+      if(keyIsDown(keys[values[0]])){
+        nuChip.stack[nuChip.SP] = nuChip.PC
+        nuChip.SP+=1;
+        nuChip.PC = values[1]*0x100+values[2];
+      }
       break;
       
     case "IFEV":
@@ -447,7 +455,7 @@ function execute(instArray){
 function screenRefresh() {
   nuChip.GfxBuffer.background(0);
   
-  nuChip.GfxBuffer.loadPixels();
+  nuChip.GfxBuffer.loadPixels({ willReadFrequently: true });
   
   for(let i = 0; i<nuChip.framebuffer.length; i++){
     if(nuChip.framebuffer[i]>0){
