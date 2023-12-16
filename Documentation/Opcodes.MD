@@ -23,7 +23,7 @@
 
 `0x90` / `ADDGPI` - Adds the value of `n` to the GFX Pointer (`GFXP`). (`n-16`)
 
-`0xC0` / `LDGP` - Loads the GFX pointer (`GFXP`) with the value of register `vX`. (`vX`)
+`0xC0` / `LDGP` - Loads the GFX pointer (`GFXP`) with the value of register `vX`. This value may be multiplied by n1, and offset by n2. (`vX`,`n1`,`n2-16`)
 
 `0xA0` / `LORES` - Changes resolution to 128x96.
 
