@@ -14,6 +14,7 @@ class ChipClass {
     this.SP = 0;
     this.DT = 0;
     this.SO = [new p5.Oscillator("square"),new p5.Oscillator("square"),new p5.Oscillator("sawtooth"),new p5.Oscillator("sawtooth"),new p5.Oscillator("triangle"),new p5.Oscillator("triangle")];
+    this.SoundBuffer = [[],[],[],[],[],[]];
     this.GFXP = 0;
     this.I = 0;
     this.FL = 0;
@@ -52,7 +53,7 @@ let Opcodes = [
   [["IFEV",2],["IFODD",2]],
   [["JMP",3],["JMPEQ",5],["JMPFL",4],["JMPKEY",4]],
   [["WAIT",1]],
-  [["SETFRQ",3],["ADDFRQ",3],["SUBFRQ",3]],
+  [["LDSO",3]],
   [["CALL",3],["RTRN",1]],
   [["TURBO"],1],
 ]
@@ -89,7 +90,7 @@ let Font = [
 ]
 
 let Program = [
-  0x03, 0x00, 0x00,
+  0x03, 0x00, 0x00
 ]
 
 function loadROM(file){
@@ -113,6 +114,7 @@ function loadROM(file){
     nuChip.I = 0;
     nuChip.FL = 0;
     nuChip.IPF = 25000;
+    nuChip.SoundBuffer = [[],[],[],[],[],[]];
     
     // reset the GfxBuffer
     nuChip.GfxBuffer.resizeCanvas(256,192);
@@ -142,16 +144,20 @@ function loadROM(file){
 // setup function
 function setup() {
   userStartAudio();
+
+  imageMode(CENTER);
+  rectMode(CENTER);
   
   // buttons
   ProgramButton = createFileInput(loadROM);
   
   // create the actual workable canvas
-  createCanvas(256*windowWidth/256, 192*windowWidth/256);
+  createCanvas(windowWidth,windowHeight);
   
   // create an instance of "ChipClass"
   nuChip = new ChipClass();
 
+  ProgramButton.position(0,height-20);
   nuChip.GfxBuffer.noStroke();
   noSmooth();
   
@@ -179,6 +185,8 @@ function setup() {
 
 // general loop
 function draw() {
+  background("#8F8F8F");
+
   // main loop
   for(let i = 0; i<nuChip.IPF; i++){
     let opcode = Fetch();
@@ -188,6 +196,25 @@ function draw() {
   
   // dt decrease
   if(nuChip.DT>0)nuChip.DT-=1;
+
+  // sound stuff
+  for(let i = 0; i<6; i++){
+    if(nuChip.SoundBuffer[i][0]!=undefined){
+      if(nuChip.SoundBuffer[i][0][1]!=0){
+        if(nuChip.SoundBuffer[i][0][0]!=0){
+          nuChip.SO[i].amp(0.1,0)
+          nuChip.SO[i].freq(nuChip.SoundBuffer[i][0][0],0)
+        }else{
+          nuChip.SO[i].amp(0,0)
+        }
+        nuChip.SoundBuffer[i][0][1] -= 1
+      }else{
+        nuChip.SoundBuffer[i].shift()
+      }
+    }else{
+      nuChip.SO[i].amp(0,0)
+    }
+  }
   
   // refresh
   screenRefresh();
@@ -221,7 +248,7 @@ function decode(opcode){
   let values = [];
   
   for(let i = 1; i<instruction[1]; i++){
-    append(values,nuChip.memory[i+nuChip.PC]);
+    values.push(nuChip.memory[i+nuChip.PC]);
   }
   
   nuChip.PC+=instruction[1];
@@ -423,20 +450,11 @@ function execute(instArray){
       if(nuChip.DT>0)nuChip.PC-=1;
       break;
       
-    case "SETFRQ":
-      if(values[1]==0){nuChip.SO[values[0]].amp(0,0);}else{nuChip.SO[values[0]].amp(0.1,0);}
-      nuChip.SO[values[0]].freq(values[1]*10,0);
-      break;
-      
-    case "ADDFRQ":
-      nuChip.SO[values[0]].amp(0.1,0);
-      nuChip.SO[values[0]].freq(nuChip.SO[values[0]].getFreq()+values[1]*10,0);
-      break;
-      
-    case "SUBFRQ":
-      nuChip.SO[values[0]].freq(nuChip.SO[values[0]].getFreq()-values[1]*10,0);
-      if(nuChip.SO[values[0]].getFreq()<1){nuChip.SO[values[0]].amp(0,0);}else{nuChip.SO[values[0]].amp(0.1,0);}
-      break;
+    case "LDSO":
+      for(let i = 0; i<values[1]*2; i+=2){
+        nuChip.SoundBuffer[values[0]].push([nuChip.memory[nuChip.I+i],nuChip.memory[nuChip.I+i+1]]);
+      }
+      break
       
     case "TURBO":
       if(nuChip.IPF==25000){
@@ -470,17 +488,27 @@ function screenRefresh() {
   }
 
   nuChip.GfxBuffer.updatePixels();
-  
-  image(nuChip.GfxBuffer,0,0,width,height);
+
+  noStroke();
+  fill("#4F4F4F")
+
+  if(height/3>width/4){
+    let wRatio = width / nuChip.GfxBuffer.width;
+    let w = nuChip.GfxBuffer.width * wRatio;
+    let h = nuChip.GfxBuffer.height * wRatio;
+    rect(width / 2, height / 2, w, h, 20);
+    image(nuChip.GfxBuffer, width / 2, height / 2, w-40, h-40);
+  }else{
+    let hRatio = height / nuChip.GfxBuffer.height;
+    let w = nuChip.GfxBuffer.width * hRatio;
+    let h = nuChip.GfxBuffer.height * hRatio;
+    rect(width / 2, height / 2, w, h, 20);
+    image(nuChip.GfxBuffer, width / 2, height / 2, w-40, h-40);
+  }
 }
 
 // resize canvas (when window is resized)
 function windowResized(){
-  if(windowHeight>windowWidth){
-    resizeCanvas(256*windowWidth/256, 192*windowWidth/256)
-    ProgramButton.position(0,height);
-  }else{
-    resizeCanvas(256*windowHeight/192, 192*windowHeight/192)
-    ProgramButton.position(width,0);
-  }
+  resizeCanvas(windowWidth, windowHeight)
+  ProgramButton.position(0,height-20);
 }
