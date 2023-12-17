@@ -203,7 +203,7 @@ function draw() {
       if(nuChip.SoundBuffer[i][0][1]!=0){
         if(nuChip.SoundBuffer[i][0][0]!=0){
           nuChip.SO[i].amp(0.1,0)
-          nuChip.SO[i].freq(nuChip.SoundBuffer[i][0][0],0)
+          nuChip.SO[i].freq(nuChip.SoundBuffer[i][0][0]*20,0)
         }else{
           nuChip.SO[i].amp(0,0)
         }
