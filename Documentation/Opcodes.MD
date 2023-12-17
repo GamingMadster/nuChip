@@ -79,11 +79,7 @@
 
   **SOUND OPCODES**
 
-`0x05` / `SETFRQ` - Sets `n1` oscillator's frequency to `n2`. Oscillator can only be turned off by setting the frequency to 0. (`n1`, `n2`)
-
-`0x15` / `ADDFRQ` - Adds `n2` to `n1` oscillator's frequency. (`n1`, `n2`)
-
-`0x25` / `SUBFRQ` - Subtracts `n2` from `n1` oscillator's frequency. (`n1`, `n2`)
+`0x05` / `LDSO` - Load the sound buffer for oscillator `n1` that is `n2` bytes long starting at the `I` register (`n1`, `n2`)
 
   **OTHER OPCODES**
 
@@ -108,7 +104,7 @@
 |2|`IFEV`,`2`|`IFODD`,`2`| | | | | | | | | | | | | | |
 |3|`JMP`,`3`|`JMPEQ`,`5`|`JMPFL`,`4`|`JMPKEY`,`4`| | | | | | | | | | | | |
 |4|`WAIT`,`1`| | | | | | | | | | | | | | | |
-|5|`SETFRQ`,`3`|`ADDFRQ`,`3`|`SUBFRQ`,`3`| | | | | | | | | | | | | |
+|5|`LDSO`,`4`| | | | | | | | | | | | | | | |
 |6|`CALL`,`3`|`RTRN`,`1`| | | | | | | | | | | | | | |
 |7|`TURBO`,`1`| | | | | | | | | | | | | | | |
 |8| | | | | | | | | | | | | | | | |
