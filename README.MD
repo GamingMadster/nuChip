@@ -10,3 +10,7 @@ nuChip is written in JavaScript with the p5.js and p5.sound libraries.
 The opcode list and table can be found [here](Documentation/Opcodes.MD).
 
 General specifications can be found [here](Documentation/Specifications.MD).
+
+# Test Suite
+> [!NOTE]
+> In the works.
