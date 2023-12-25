@@ -1,12 +1,14 @@
 # Specifications
 
+##General Specifications
+
 `Memory` - 32,768 Bytes, 16-bit
 
-`Framebuffer` - 49,152 Bytes HIRES, 12288 Bytes LORES (amount of bits is dependent on implementation.)
+`Framebuffer` - 49,152 Bytes `HIRES`, 12288 Bytes `LORES`, 16-bit RGB-565 w/ conversion, 32-bit no conversion needed.
 
-`Display` - 256x192 HIRES, 128x96 LORES
+`Display` - 256x192 `HIRES`, 128x96 `LORES`
 
-`Graphics Memory` - 8192 Bytes (amount of bits is dependent on implementation.)
+`Graphics Memory` - 8192 Bytes, 16-bit RGB-565 w/ conversion (As current programs use RGB-888), 32-bit no conversion needed.
 
 `Stack` - 64 Positions, 16-bit
 
@@ -16,8 +18,7 @@
 
 nuChip runs at 25,000 instructions per frame, although it is allowed to be up to 50,000 if the `TURBO` opcode is called.
 
-
-**Independent Registers and Pointers**
+##Independent Registers and Pointers
 
 `Program Counter` - Keeps track of where the system is in memory that is always incremented.
 
