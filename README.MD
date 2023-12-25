@@ -13,4 +13,4 @@ General specifications can be found [here](Documentation/Specifications.MD).
 
 # Test Suite
 > [!NOTE]
-> In the works.
+> It isn't finished at the moment. I have to code the tests.
