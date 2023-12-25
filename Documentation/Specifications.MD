@@ -4,7 +4,7 @@
 
 `Memory` - 32,768 Bytes, 16-bit
 
-`Framebuffer` - 49,152 Bytes `HIRES`, 12288 Bytes `LORES`, 16-bit RGB-565 w/ conversion, 32-bit no conversion needed.
+`Framebuffer` - 49,152 Bytes `HIRES`, 12288 Bytes `LORES`, 16-bit RGB-565 (May need conversion for certain commands), 32-bit no conversion needed.
 
 `Display` - 256x192 `HIRES`, 128x96 `LORES`
 
