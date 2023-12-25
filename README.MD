@@ -1,7 +1,7 @@
 # nuChip
-nuChip is a virtual machine that takes inspiration from the Chip 8 interpreter.
+nuChip is a virtual machine that takes inspiration from the Chip 8 interpreter as a new Chip variant.
 
-nuChip is written in JavaScript with the p5.js and p5.sound libraries.
+The nuChip IDE was written in JavaScript with the p5.js and p5.sound libraries.
 
 # Documentation
 > [!NOTE]
