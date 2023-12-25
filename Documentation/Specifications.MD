@@ -20,14 +20,14 @@ nuChip runs at 25,000 instructions per frame, although it is allowed to be up to
 
 ## Independent Registers and Pointers
 
-`Program Counter` - Keeps track of where the system is in memory that is always incremented.
+`Program Counter` - Keeps track of where the system is in memory that is always incremented. `16-bit`
 
-`Stack Pointer` - Keeps track of what position in the stack you are in.
+`Stack Pointer` - Keeps track of what position in the stack you are in. `8-bit`
 
-`Delay Timer` - Register that allows for halting up to 255 frames.
+`Delay Timer` - Register that allows for halting up to 255 frames. `8-bit`
 
-`Graphics Pointer` - Keeps track of where graphics memory is being read from or written to.
+`Graphics Pointer` - Keeps track of where graphics memory is being read from or written to. `16-bit`
 
-`Index Register` - Independent register that allows reading from memory.
+`Index Register` - Independent register that allows reading from memory. `16-bit`
 
-`Flag Register` - Flag that may be used for graphical collisions, among other things.
+`Flag Register` - Flag that may be used for graphical collisions, among other things. `8-bit`
