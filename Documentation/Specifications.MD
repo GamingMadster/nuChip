@@ -1,6 +1,6 @@
 # Specifications
 
-##General Specifications
+## General Specifications
 
 `Memory` - 32,768 Bytes, 16-bit
 
@@ -18,7 +18,7 @@
 
 nuChip runs at 25,000 instructions per frame, although it is allowed to be up to 50,000 if the `TURBO` opcode is called.
 
-##Independent Registers and Pointers
+## Independent Registers and Pointers
 
 `Program Counter` - Keeps track of where the system is in memory that is always incremented.
 
