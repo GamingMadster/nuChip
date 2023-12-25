@@ -5,7 +5,7 @@ The nuChip IDE was written in JavaScript with the p5.js and p5.sound libraries.
 
 # Documentation
 > [!NOTE]
-> This is not a finished machine, and opcodes may change position within the opcode table.
+> This is not a finished machine, and opcodes may either change positions or new opcodes may be added.
 
 The opcode list and table can be found [here](Documentation/Opcodes.MD).
 
