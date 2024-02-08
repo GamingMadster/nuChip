@@ -5,29 +5,31 @@
 
   **GRAPHICAL OPCODES**
 
-`0x10` / `CLRFB` - Clears the framebuffer.
+`0x10` / `STR` - Set tile `vX` to the tile value of `vY` (`vX`, `vY`)
 
-`0x20` / `FILL` - Fills the entire screen with the color in the RGB value given. (r, g, b)
+`0x20` / `FLL` - Fills the entire screen with the tile value given (`n`)
 
-`0x30` / `LDFB` - Loads the color information for a pixel at position `vX`, `vY`. If the pixel that is overwritten is not black, set the `FL` register to 1. (`vX`, `vY`, `r`, `g`, `b`)
+`0x30` / `LDG` - Load graphics at the memory position according to the `I` register
 
-`0x40` / `LDFBVX` - Loads the color information for a pixel at position `vX`, `vY`. If the pixel that is overwritten is not black, set the `FL` register to 1. (`vX`, `vY`, `vR`, `vG`, `vB`)
+`0x40` / `LDP` - Loads the color information in the `n` position of the palette. Uses two bytes in the format of rgba4444 (`n`, `rg`, `ba`) 
 
-`0x50` / `RDGFX` - Reads graphics from the graphics memory at the GFX Pointer (`GP`) and displays it on the screen at position `vX`, `vY`. If any pixels that are overwritten are not black, set the `FL` register to 1. (`vX`, `vY`, `sizeX`, `sizeY`, `Transparency`)
+`0x50` / `STT` - Sets the tile `n1-16` to the tile information `n2-16` (`n1-16`, `n2-16`)
 
-`0x60` / `WRGFX` - Writes the data of a pixel to the graphics memory at `n` with `r`, `g`, and `b`. (`n-16`, `r`, `g`, `b`)
+`0x60` / `SPR` - Create a sprite at position (`n1`, `n2`) using the tile information `n3-16`. Uses `n4` to select which index the sprite is created under. (`n1`, `n2`, `n3-16`, `n4`)
 
-`0x70` / `LDGFX` - Loads memory values from the address according to the register `I`. n specifies how many pixels to carry over. (`n-16`)
+`0x70` / `MSPI` - Move sprite at index `n1` by signed byte <`n2`, `n3`> (`n1`, `n2`, `n3`)
 
-`0x80` / `LDGPI` - Loads the GFX Pointer (`GFXP`) with value `n`. (`n-16`)
+`0x80` / `DSP` - Delete sprite at index `n` (`n`)
 
 `0x90` / `ADDGPI` - Adds the value of `n` to the GFX Pointer (`GFXP`). (`n-16`)
 
 `0xC0` / `LDGP` - Loads the GFX pointer (`GFXP`) with the value of register `vX`. This value may be multiplied by n1, and offset by n2. (`vX`,`n1`,`n2-16`)
 
-`0xA0` / `LORES` - Changes resolution to 128x96.
+`0xC0` / `LOD` - Changes resolution to 128x96. Tile buffer does not change size.
 
-`0xB0` / `HIRES` - Changes resolution to 256x192. (Default resolution.)
+`0xD0` / `HID` - Changes resolution to 256x192. Tile buffer does not change size. (Default resolution.)
+
+`0xE0` / `SCR` - scroll in direction according to hi-nibble of `n` by the lo-nibble of `n` (`n`)
 
   **REGISTER OPCODES**
 
