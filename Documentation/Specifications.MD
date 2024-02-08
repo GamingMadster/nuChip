@@ -2,32 +2,36 @@
 
 ## General Specifications
 
-`Memory` - 32,768 Bytes, 16-bit
+`Memory` - 64 KB, 8-bit
 
-`Framebuffer` - 49,152 Bytes `HIRES`, 12288 Bytes `LORES`, 16-bit RGB-565 (May need conversion for certain commands), 32-bit no conversion needed.
+`Tilebuffer` - 768 Bytes `HID`, 192 Bytes `LOD`, 
 
-`Display` - 256x192 `HIRES`, 128x96 `LORES`
+`Display` - 256x192 `HID`, 128x96 `LOD`
 
-`Graphics Memory` - 8192 Bytes, 16-bit RGB-565 w/ conversion (As current programs use RGB-888), 32-bit no conversion needed.
+`Graphics Memory` - 8192 Bytes, 8-bit (each nibble is two pixels.)
 
-`Stack` - 64 Positions, 16-bit
+`Stack` - 16 Bytes, 16-bit
 
-`Registers` - 64 Registers, 16-bit
+`Registers` - 256 general purpose registers, 16-bit
 
-`Sound` - 6 Channels (2 Square, 2 Sawtooth, 2 Triangle)
+`Sound` - 4 Channels, each programmable with a custom waveform.
 
-nuChip runs at 25,000 instructions per frame, although it is allowed to be up to 50,000 if the `TURBO` opcode is called.
+`Cycle Rate` - 50,000 cycles per frame, 3.0 mHz.
 
 ## Independent Registers and Pointers
 
-`Program Counter` - Keeps track of where the system is in memory that is always incremented. `16-bit`
+`Program Counter` - Counter pointing to the next instruction. `16-bit`
 
-`Stack Pointer` - Keeps track of what position in the stack you are in. `8-bit`
+`Stack Pointer` - Counter pointing to an index within the stack. `4-bit`
 
-`Delay Timer` - Register that allows for halting up to 255 frames. `8-bit`
+`Delay Timer` - Timer register. `8-bit`
 
-`Graphics Pointer` - Keeps track of where graphics memory is being read from or written to. `16-bit`
+`Graphics Pointer` - Points to where graphics memory is being read from or written to. `16-bit`
 
-`Index Register` - Independent register that allows reading from memory. `16-bit`
+`Index Register` - Special register that is used aside the general purpose registers. `16-bit`
 
-`Flag Register` - Flag that may be used for graphical collisions, among other things. `8-bit`
+`Flag Register` - Special register that reflects the output of some opcodes. `4-Bit`
+
+`Pan Register` - Special register that pans the screen horizontally. `8-bit`
+
+`Scanline Register` - Special register that reflects the current scanline. (Hacky, but it works.)
