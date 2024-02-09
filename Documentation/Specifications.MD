@@ -10,6 +10,8 @@
 
 `Graphics Memory` - 8192 Bytes, 8-bit (each byte is two pixels.)
 
+`Palette Memory` - 32 bytes, 8-bit (two bytes = one color.)
+
 `Stack` - 16 Bytes, 16-bit
 
 `Registers` - 256 general purpose registers, 16-bit
