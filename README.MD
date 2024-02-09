@@ -2,6 +2,7 @@
 nuChip is a virtual machine that takes inspiration from the Chip 8 interpreter as a new Chip variant.
 
 The JS nuChip IDE is written using the p5.js and p5.sound libraries.
+
 The JAVA nuChip IDE is written using Processing, Processing.sound, and LazyGui.
 
 # Documentation
