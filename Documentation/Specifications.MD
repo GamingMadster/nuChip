@@ -16,7 +16,7 @@
 
 `Sound` - 4 Channels, each programmable with a custom waveform.
 
-`Cycle Rate` - 50,000 cycles per frame, 3.0 mHz.
+`Cycle Rate` - 50,000 cycles per frame, 3.0 MHz.
 
 ## Independent Registers and Pointers
 
