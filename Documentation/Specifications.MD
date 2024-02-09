@@ -8,7 +8,7 @@
 
 `Display` - 256x192 `HID`, 128x96 `LOD`
 
-`Graphics Memory` - 8192 Bytes, 8-bit (each nibble is two pixels.)
+`Graphics Memory` - 8192 Bytes, 8-bit (each byte is two pixels.)
 
 `Stack` - 16 Bytes, 16-bit
 
